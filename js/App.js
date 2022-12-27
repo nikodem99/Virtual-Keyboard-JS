@@ -1,4 +1,3 @@
-// JS for interactive keyboard fun...
 const $key = (key) => (
     document.querySelector(`kbd[data-key='${key}'], kbd[data-alt='${key}']`)
 );
@@ -18,7 +17,7 @@ const codeToElement = {
     'MetaRight': $key('rwin'),  
 }
 
-window.addEventListener('keydown', (e: Event) => {
+window.addEventListener('keydown', (e) => {
     console.log(e);
     const el = codeToElement[e.code] || $key(e.key.toLowerCase());
     if (el) { 
@@ -27,7 +26,7 @@ window.addEventListener('keydown', (e: Event) => {
     } 
 });
 
-window.addEventListener('keyup', (e: Event) => {
+window.addEventListener('keyup', (e) => {
     const el = codeToElement[e.code] || $key(e.key.toLowerCase());
     if (el) {  
     el.classList.remove('pressed'); 

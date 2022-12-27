@@ -38,3 +38,171 @@ em { margin-top: 1rem; }
     radial-gradient(#111, #222);
   padding: 0.25rem;
 }
+
+$u1: 40px;
+
+.row {
+  height: $u1;
+  display: flex;
+  justify-content: space-between;
+  width: $u1 * 15.43;
+  padding-top: 1px;
+  margin-bottom: 2px;
+}
+
+@mixin keycap($base: #e9e8e6) {
+  $light: lighten($base, 2%); //#ece8e4
+  $mid: darken($base, 16%); // #dedad6
+  $dark: darken($base, 28%); // #c9c4c4
+  background-color: $base;
+  border-color: $mid;
+  border-top-color: $light;
+  border-bottom-color: $dark;
+  box-shadow:
+        0 -0.125em 0 -0.063em $dark,
+        0 0.125em 0 -0.063em rgba(0,0,0,0.5);
+  
+  &::before {
+    border-left-color: darken($base, 23%);
+    border-right-color: darken($base, 23%);
+    border-bottom-color: darken($base, 35%);
+    box-shadow: 0 4px 4px -3px rgba(0,0,0,0.15);
+    background-image:
+            linear-gradient(
+              to right,
+              $base,
+              desaturate(darken($base, 12%), 20%) 5%,
+              transparent 40%,
+              transparent 60%,
+              desaturate(darken($base, 12%), 20%) 95%,
+              $base
+            );
+  }
+}
+
+kbd {
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: rgba(0,0,0,0.75);
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.125;
+  padding: 0.33em 0.66em;
+  position: relative;
+  text-align: center;  
+  vertical-align: middle;
+  width: $u1; height: $u1;
+  
+  border: 3px solid transparent;
+  border-top: 2px solid transparent;
+  border-bottom: 6px solid transparent;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0px; left: -1px;
+    bottom: -1px; right: -1px;
+    border-radius: 4px;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+  }
+  
+  @include keycap();
+  
+  transition: transform 100ms;
+  outline: 0;
+  &:active, &.pressed {
+    transform: 
+      scale(0.96,0.96)
+      translate(0, 3px);
+  }
+  
+  &[data-key]::after {
+    position: relative;
+    z-index: 1;
+    content: attr(data-key);
+    text-transform: capitalize;
+  }
+  
+  &[data-alt]::after {
+    white-space: pre;
+    content: attr(data-alt) '\A' attr(data-key);
+    line-height: 0.95rem;
+    font-size: 0.7em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  
+  &[data-key=tab], 
+  &[data-key=enter],
+  &[data-key=caps],
+  &[data-key=backspace],
+  &[data-key=lshift],
+  &[data-key=rshift],
+  &[data-key=lctrl],
+  &[data-key=rctrl],
+  &[data-key=lalt],
+  &[data-key=ralt],
+  &[data-key=lwin],
+  &[data-key=rwin],
+  &[data-key=rctx] {    
+    &:after {
+      font-size: 0.725em; 
+      top: 0;
+      left: 0; right: 0;
+      line-height: $u1 * 0.78;
+      position: absolute;
+    }
+    @include keycap(#7f8384);
+  }
+  
+  &[data-key=lshift], &[data-key=rshift] {
+    &::after { content: 'Shift'; }
+  }
+  
+  &[data-key=lctrl], &[data-key=rctrl] {
+    &::after { content: 'Ctrl'; }
+  }  
+  
+  &[data-key=lwin], &[data-key=rwin] {
+    &::after { content: '\2756'; font-size: 1rem;  }
+  }    
+  
+  &[data-key=lalt], &[data-key=ralt] {
+    &::after { content: 'Alt'; }
+  }      
+  
+  &[data-key=space]::after { content: none; }
+  &[data-key=rctx]::after { content: '\2630'; }
+  
+  &[data-key=lalt], &[data-key=ralt] {
+    &::after { content: 'Alt'; }
+  }      
+  
+  &[data-key=tab],
+  &[data-key="\\"] {
+    width: $u1 * 1.5;
+  }
+  
+  &[data-key=caps] { width: $u1 * 1.75; }
+  &[data-key=backspace] { width: $u1 * 2; }
+  &[data-key=enter] { width: $u1 * 2.25; }  
+  &[data-key=lshift] { width: $u1 * 2.25; }
+  &[data-key=rshift] { width: $u1 * 2.75; }
+  
+  &[data-key=lctrl],
+  &[data-key=rctrl],
+  &[data-key=lalt],
+  &[data-key=ralt],
+  &[data-key=lwin],
+  &[data-key=rwin],
+  &[data-key=rctx] { width: $u1 * 1.25; }
+  
+  &[data-key=space] { width: $u1 * 6.25; }
+}
